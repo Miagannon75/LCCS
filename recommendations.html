@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey</title>
+ 
+    <style>
+      
+       body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #e9e8ed;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+      .topnav {
+      overflow: hidden;
+      background-color: #000080;
+        }
+        
+    .topnav a {
+      float: left;
+      display: block;
+      color: #FFFFFF;
+      text-align: center;
+      padding: 15px 15px;
+      text-decoration: none;
+        }
+
+    .topnav a:hover {
+      background-color: #000080;
+      color: black;
+       }
+    </style>
+    
+</head>
+<body>
+     
+    <div class="topnav">
+        <a href="/">Home</a>
+        <a href="/survey">Survey</a>
+        <a href="/recommendations">Recommendations</a>
+    </div>
+    
+    
+     <h1>Welcome to the Recommendations page!</h1>
+     
+    <form id="surveyForm" action="#" method="post" onsubmit="return handleSubmit(event)">
+        <label for="County">What county would you like to do your driving test in?</label><br>
+        <select id="County" name="County" required>
+            <option value="">Select a County</option>
+            <option value="Dublin">Dublin</option>
+            <option value="Donegal">Donegal</option>
+            <option value="Galway">Galway</option>
+        </select><br><br>
+        <button type="submit">Submit</button>
+    </form>   
+    
+    <div id="responseMessage" style="display: none;">
+        <h3>Here is your recommendation!</h3>
+        <p id="suggestion"></p>
+    </div>
+    
+    <!-- Divs to hold the charts -->
+    <div id="donegalChart" style="display: none;">{{ bc_donegal|safe }}</div>
+    <div id="dublinChart" style="display: none;">{{ bc_dublin|safe }}</div>
+    <div id="galwayChart" style="display: none;">{{ bc_galway|safe }}</div>
+
+    <script>
+    const suggestions = {
+        "Dublin": "The mean pass rate for Dublin is 45% so I wouldn't suggest taking your driving test in Dublin as there is a lower chance of passing.",
+        "Donegal": "The mean pass rate in Donegal is 57% so I would suggest taking your driving test in Donegal as there is a higher chance of passing.",
+        "Galway": "The mean pass rate in Galway is 58% so I would suggest taking your driving test in Galway as there is a higher chance of passing."
+    };
+  
+    function handleSubmit(event) {
+        event.preventDefault(); // Prevent form from submitting and page reloading
+
+        const selectedCounty = document.getElementById('County').value;
+
+        if (selectedCounty) {
+            // Hide form and show response message
+            document.getElementById('surveyForm').style.display = 'none';
+            document.getElementById('responseMessage').style.display = 'block';
+            document.getElementById('suggestion').innerText = suggestions[selectedCounty];
+            
+            // Show the corresponding chart and hide others
+            if (selectedCounty === 'Donegal') {
+                document.getElementById('donegalChart').style.display = 'block';
+                document.getElementById('dublinChart').style.display = 'none';
+                document.getElementById('galwayChart').style.display = 'none';
+            } else if (selectedCounty === 'Dublin') {
+                document.getElementById('dublinChart').style.display = 'block';
+                document.getElementById('donegalChart').style.display = 'none';
+                document.getElementById('galwayChart').style.display = 'none';
+            } else if (selectedCounty === 'Galway') {
+                document.getElementById('galwayChart').style.display = 'block';
+                document.getElementById('donegalChart').style.display = 'none';
+                document.getElementById('dublinChart').style.display = 'none';
+            }
+        } else {
+            // If no county is selected, show an alert
+            alert('Please select a county.');
+        }
+    }
+    </script>
+</body>
+</html>

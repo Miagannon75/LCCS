@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Plotly Charts</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+      
+       body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #e9e8ed;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+      .topnav {
+      overflow: hidden;
+      background-color: #000080;
+        }
+        
+    .topnav a {
+      float: left;
+      display: block;
+      color: #FFFFFF;
+      text-align: center;
+      padding: 15px 15px;
+      text-decoration: none;
+        }
+
+    .topnav a:hover {
+      background-color: #000080;
+      color: black;
+       }
+       
+   
+    
+    
+      h1 { text-align: center; }
+      
+      h3 { text-align: center; }
+      
+   </style>
+</head>
+<body>
+
+    <div class="topnav">
+        <a href="/">Home</a>
+        <a href="/survey">Survey</a>
+        <a href="/recommendations">Recommendations</a>
+    
+    </div>
+
+     <h1>Welcome to the home page!</h1>
+     
+     <p>The goal of my project was to analyse and visualize driving test pass rates over the counties Dublin, Galway and Donegal over the time frame of january 2021 to december 2024, When designing this coursework project I hoped it could help people have the best chance of passing their driving test</p>
+    
+    <h3>Graphs</h2>
+    
+    
+
+    <h2>Co.Donegal Bar Chart</h2>
+    {{ bc_donegal|safe }}
+    
+    <p> This Bar Chart shows the percentage of pass rates in Co.Donegal between january 2021 to December 2024. Every bar shows the pass rates for a month, From this Bar chart we can see that the pass rates were high beginning of 2021 then dip slightly mid year then the pass rates are quiet inconsistant</p>
+    
+    <h2>Co.Dublin Bar Chart</h2>
+    {{ bc_dublin|safe }}
+    
+    <p> This Bar Chart shows the percentage of pass rates in Co.Dublin between january 2021 to December 2024. Every bar represents the pass rates for a month, From this Bar chart we can see that the pass rates in Dublin has stayed quite consistant since 2021 </p>
+    
+    <h2>Co.Galway Bar Chart</h2>
+    {{ bc_galway|safe }}
+    
+    <p> This Bar Chart shows the percentage of pass rates in Co.Galway between January 2021 to December 2024. Every bar shows the pass rates for a month, From this Bar chart we can see that pass rates in Galway has stayed consistant since 2021</p>
+    
+    <h2>Line Chart</h2>
+    {{ line_chart|safe }}
+    
+    <p> This Line chart shows the pass rates of Co.Donegal,Co.dublin and Co.Galway between January 2021 and December 2024. From this Line chart we can see that Dublins pass rate is much lower than Donegal and Galway and while Galway is more consistantly high Galway and Donegal are relatively similar</p>
+    
+    <h2>Relationship Plot between Dublin and Galway</h2>
+    {{ scatter_plot|safe }}
+    
+    <p> This Scatter plot shows the relationship between pass rates in Dublin and pass rates in Galway. From this graph we can see a positive coorelation between the pass rate in Dublin and Galway and we can see that DUblin and Galway have similar but not identical trends when it comes to months with higher or lower pass rates </p>
+    
+    <h2>Scatter Plot</h2>
+    {{ scatter_plot_2|safe}}
+    
+    <p> This scatter plot shows the pass rates of Co.Donegal,Co.Dublin and Co.Galway. From this scattere plot we can see that Dublins pass rate is consistantly lower than Donegal and Galway and we can see how each county follow a similar trend as they rise and fall usually at the same time  </p>
+    
+    
+</body>
+</html>

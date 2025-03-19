@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey</title>
+    
+    
+       <style>
+         body {
+             font-family: 'Roboto', sans-serif;
+             background-color: #e9e8ed;
+             color: #333;
+             line-height: 1.6;
+         }
+          .topnav {
+          overflow: hidden;
+          background-color: #000080;
+            }
+            
+        .topnav a {
+          float: left;
+          display: block;
+          color: #FFFFFF;
+          text-align: center;
+          padding: 15px 15px;
+          text-decoration: none;
+            }
+        .topnav a:hover {
+          background-color: #000080;
+          color: black;
+           }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        th, td {
+            padding: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 6px 11px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="topnav">
+        <a href="/">Home</a>
+        <a href="/survey">Survey</a>
+        <a href="/recommendations">Recommendations</a>
+    </div>
+        
+        
+    <div class="container">
+    <h1>Welcome to the Survey page!</h1>
+
+    <form id="suggestions-form">
+        
+        <label for="data">What data should be added to this website? (type a string)</label><br>
+        <input type="text" id="data" required><br><br>
+        
+        <label for="year">What year should this data come from? (type an integer)</label><br>
+        <input type="number" id="year" min="2000" max="2025" required><br><br>
+        
+        <label for="reliability">What should the reliability of this data be? (type a float)</label><br>
+        <input type="number" id="reliability" step="0.1" min="1.0" max="10.0" required><br><br>
+        
+        <label for="opinion">Do you like my webpage?</label><br>
+        <select id="opinion" required>
+            <option value="">Select Boolean Value</option>
+            <option value="Y">Yes</option>
+            <option value="N">No</option>
+        </select><br><br>
+        
+        <button type="button" onclick="saveData()">Submit</button>
+        <button type="button" onclick="clearData()">Delete past data</button>
+    </form>
+    <br>
+    <h2>Summary of submitted suggestions displayed</h2>
+    
+    <table id="data-table">
+        <thead>
+            <tr>
+                <th>data</th>
+                <th>year</th>
+                <th>reliability</th>
+                <th>opinion</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+        </tbody>
+    </table>
+    
+    </div>
+    
+    <script>
+    function saveData() {
+        const data = document.getElementById('data').value;
+        const year = document.getElementById('year').value;  // Fix: Changed 'date' to 'year' to match input ID
+        const reliability = document.getElementById('reliability').value;  // Fix: Corrected the typo from 'reiability'
+        const opinion = document.getElementById('opinion').value;  // Fix: Corrected the typo from 'permission'
+
+        if (!data || !year || !reliability || !opinion) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+        const suggestedData= { data, year, reliability, opinion };
+
+        
+        const suggestions = JSON.parse(localStorage.getItem('suggestions') || '[]');
+        
+      
+        suggestions.push(suggestedData);
+
+     
+        localStorage.setItem('suggestions', JSON.stringify(suggestions));
+
+        loadTable();
+    }
+
+    function loadTable() {
+        const table= document.querySelector('#data-table tbody');  
+        
+        table.innerHTML = '';
+
+        const suggestions = JSON.parse(localStorage.getItem('suggestions') || '[]');
+
+        suggestions.forEach(item => {
+            const rows = document.createElement('tr'); 
+          
+            rows.innerHTML = `
+                <td>${item.data}</td>
+                <td>${item.year}</td>  <!-- Fix: Changed 'date' to 'year' to match object keys -->
+                <td>${item.reliability}</td>
+                <td>${item.opinion === 'Y' ? 'True' : 'False'}</td> <!-- Fix: Changed 'opionion' to 'opinion' -->
+            `;
+
+            table.appendChild(rows);
+        });
+    }
+
+    function clearData() {
+        if (confirm("Are you sure you want to clear data?")) {
+            localStorage.removeItem('suggestions');
+            loadTable();
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadTable);
+    </script>
+
+</body>
+</html>
